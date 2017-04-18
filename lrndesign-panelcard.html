@@ -1,0 +1,34 @@
+<link rel="import" href="../polymer/polymer.html">
+
+<!--
+`lrndesign-panelcard`
+A LRN element
+
+@demo demo/index.html 
+-->
+
+<dom-module id="lrndesign-panelcard">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+    </style>
+    <h2>Hello [[prop1]]</h2>
+  </template>
+
+  <script>
+    Polymer({
+
+      is: 'lrndesign-panelcard',
+
+      properties: {
+        prop1: {
+          type: String,
+          value: 'lrndesign-panelcard',
+        },
+      },
+
+    });
+  </script>
+</dom-module>
