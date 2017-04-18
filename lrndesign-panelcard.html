@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../hax-behaviors/hax-behaviors.html">
 <link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-swatch-picker/paper-swatch-picker.html">
 <link rel="import" href="../materializecss-styles/materializecss-styles.html">
 <!--
 `lrndesign-panelcard`
@@ -27,7 +28,10 @@ A LRN element
       }
     </style>
     <paper-material elevation="{{elevation}}">
-      <hax-editbar edit="{{edit}}"></hax-editbar>
+      <hax-editbar edit="{{edit}}">
+        <paper-swatch-picker color="{{color}}"></paper-swatch-picker>
+        <paper-swatch-picker color="{{textColor}}"></paper-swatch-picker>
+      </hax-editbar>
       <div class$="card-panel {{color}}">
         <h3 class$="{{textColor}}-text"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
         <span class$="{{textColor}}-text">
