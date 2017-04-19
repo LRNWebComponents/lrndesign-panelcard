@@ -1,6 +1,7 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../hax-behaviors/hax-behaviors.html">
 <link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../paper-swatch-picker/paper-swatch-picker.html">
 <link rel="import" href="../materializecss-styles/materializecss-styles.html">
 <!--
@@ -29,12 +30,14 @@ A LRN element
     </style>
     <paper-material elevation="{{elevation}}">
       <hax-editbar edit="{{edit}}">
-        <paper-swatch-picker color="{{color}}"></paper-swatch-picker>
-        <paper-swatch-picker color="{{textColor}}"></paper-swatch-picker>
+        <paper-swatch-picker id="itemcolor" color="{{color}}"></paper-swatch-picker>
+        <paper-tooltip for="itemcolor">Background color</paper-tooltip>
+        <paper-swatch-picker id="textcolor" color="{{textColor}}"></paper-swatch-picker>
+        <paper-tooltip for="textcolor">Text color</paper-tooltip>
       </hax-editbar>
-      <div class$="card-panel {{color}}">
-        <h3 class$="{{textColor}}-text"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
-        <span class$="{{textColor}}-text">
+      <div class$="card-panel {{colorClass}}">
+        <h3 class$="{{textColorClass}}"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
+        <span class$="{{textColorClass}}">
           <hax-editable edit="{{edit}}" type="html">
             <content></content>
           </hax-editable>
@@ -47,30 +50,74 @@ A LRN element
     Polymer({
 
       is: 'lrndesign-panelcard',
-      behaviors: [HAXBehaviors.EditBehaviors],
+      behaviors: [HAXBehaviors.EditBehaviors, MaterializeCSSBehaviors.ColorBehaviors],
       properties: {
+        /**
+         * Title of the panel
+         */
         title: {
           type: String,
           value: '',
         },
+        /**
+         * Color code
+         */
         color: {
           type: String,
-          value: 'yellow accent-1',
+          observer: '_colorChange',
         },
+        /**
+         * Color class
+         */
+        colorClass: {
+          type: String,
+          value: 'yellow lighten-4',
+        },
+        /**
+         * Text color code
+         */
         textColor: {
           type: String,
-          value: 'black',
+          observer: '_textColorChange',
         },
+        /**
+         * Text color class
+         */
+        textColorClass: {
+          type: String,
+          value: 'black-text',
+        },
+        /**
+         * Height of the paper.
+         */
         elevation: {
           type: Number,
           value: 2,
         }
       },
+      /**
+       * Notice the color change and shift it over to the class name.
+       */
+      _colorChange: function() {
+        if (this.color.substring(0, 1) == '#') {
+          this.colorClass = this._colorTransform(this.color, '', '');
+        }
+      },
+      /**
+       * Text color change and shift it over to the class name.
+       */
+      _textColorChange: function() {
+        if (this.textColor.substring(0, 1) == '#') {
+          this.textColorClass = this._colorTransform(this.textColor, '-text', 'text-');
+        }
+      },
+      /**
+       * Demo mode.
+       */
        _demoInit: function() {
         this.title = "Block title";
         this.innerHTML = "Disrupt, innovate out of your job. Pay everything forward. Collapse local inefficiencies. Pay forward via analysis of process. Collapse larger inefficiencies... Collapse edge industries. Rinse, repeat in other areas.";
       }
-
     });
   </script>
 </dom-module>
