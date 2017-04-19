@@ -21,6 +21,7 @@ A LRN element
         position: relative;
         box-sizing: border-box;
         --secondary-text-color: #FFFFFF;
+        --paper-input-container-color: #FFFFFF;
       }
       .card-panel {
         transition: box-shadow .25s;
@@ -40,7 +41,7 @@ A LRN element
         <paper-swatch-picker id="textcolor" color="{{textColorCode}}"></paper-swatch-picker>
         <paper-tooltip for="textcolor">Text color</paper-tooltip>
         <paper-dropdown-menu class="elevation-dropdown" label="Elevation">
-          <paper-listbox class="dropdown-content" selected="{{elevation}}">
+          <paper-listbox class="dropdown-content" selected="{{elevationList}}">
             <paper-item>1</paper-item>
             <paper-item>2</paper-item>
             <paper-item>3</paper-item>
@@ -111,7 +112,19 @@ A LRN element
         elevation: {
           type: Number,
           value: 2,
+          reflectToAttribute: true,
+        },
+        elevationList: {
+          type: Number,
+          value: 1,
+          observer: '_elevationListChange',
         }
+      },
+      /**
+       * Reflect value back to elevation correctly from list order.
+       */
+      _elevationListChange: function(value) {
+        this.elevation = (value+1);
       },
       /**
        * Notice the color change and shift it over to the class name.
