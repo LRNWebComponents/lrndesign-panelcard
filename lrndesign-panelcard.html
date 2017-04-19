@@ -30,14 +30,14 @@ A LRN element
     </style>
     <paper-material elevation="{{elevation}}">
       <hax-editbar edit="{{edit}}">
-        <paper-swatch-picker id="itemcolor" color="{{color}}"></paper-swatch-picker>
+        <paper-swatch-picker id="itemcolor" color="{{colorCode}}"></paper-swatch-picker>
         <paper-tooltip for="itemcolor">Background color</paper-tooltip>
-        <paper-swatch-picker id="textcolor" color="{{textColor}}"></paper-swatch-picker>
+        <paper-swatch-picker id="textcolor" color="{{textColorCode}}"></paper-swatch-picker>
         <paper-tooltip for="textcolor">Text color</paper-tooltip>
       </hax-editbar>
-      <div class$="card-panel {{colorClass}}">
-        <h3 class$="{{textColorClass}}"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
-        <span class$="{{textColorClass}}">
+      <div class$="card-panel {{color}}">
+        <h3 class$="{{textColor}}"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
+        <span class$="{{textColor}}">
           <hax-editable edit="{{edit}}" type="html">
             <content></content>
           </hax-editable>
@@ -62,30 +62,34 @@ A LRN element
         /**
          * Color code
          */
-        color: {
+        colorCode: {
           type: String,
           observer: '_colorChange',
         },
         /**
          * Color class
          */
-        colorClass: {
+        color: {
           type: String,
           value: 'yellow lighten-4',
+          reflectToAttribute: true,
+          notify: true,
         },
         /**
          * Text color code
          */
-        textColor: {
+        textColorCode: {
           type: String,
           observer: '_textColorChange',
         },
         /**
          * Text color class
          */
-        textColorClass: {
+        textColor: {
           type: String,
           value: 'black-text',
+          reflectToAttribute: true,
+          notify: true,
         },
         /**
          * Height of the paper.
@@ -99,16 +103,16 @@ A LRN element
        * Notice the color change and shift it over to the class name.
        */
       _colorChange: function() {
-        if (this.color.substring(0, 1) == '#') {
-          this.colorClass = this._colorTransform(this.color, '', '');
+        if (this.colorCode.substring(0, 1) == '#') {
+          this.color = this._colorTransform(this.colorCode, '', '');
         }
       },
       /**
        * Text color change and shift it over to the class name.
        */
       _textColorChange: function() {
-        if (this.textColor.substring(0, 1) == '#') {
-          this.textColorClass = this._colorTransform(this.textColor, '-text', 'text-');
+        if (this.textColorCode.substring(0, 1) == '#') {
+          this.textColor = this._colorTransform(this.textColorCode, '-text', 'text-');
         }
       },
       /**
