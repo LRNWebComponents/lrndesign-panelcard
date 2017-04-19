@@ -2,6 +2,7 @@
 <link rel="import" href="../hax-behaviors/hax-behaviors.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
 <link rel="import" href="../paper-swatch-picker/paper-swatch-picker.html">
 <link rel="import" href="../materializecss-styles/materializecss-styles.html">
 <!--
@@ -19,6 +20,7 @@ A LRN element
         display: inline-block;
         position: relative;
         box-sizing: border-box;
+        --secondary-text-color: #FFFFFF;
       }
       .card-panel {
         transition: box-shadow .25s;
@@ -27,6 +29,9 @@ A LRN element
         border-radius: 2px;
         background-color: #fff;
       }
+      .elevation-dropdown {
+        width: 4em;
+      }
     </style>
     <paper-material elevation="{{elevation}}">
       <hax-editbar edit="{{edit}}">
@@ -34,6 +39,15 @@ A LRN element
         <paper-tooltip for="itemcolor">Background color</paper-tooltip>
         <paper-swatch-picker id="textcolor" color="{{textColorCode}}"></paper-swatch-picker>
         <paper-tooltip for="textcolor">Text color</paper-tooltip>
+        <paper-dropdown-menu class="elevation-dropdown" label="Elevation">
+          <paper-listbox class="dropdown-content" selected="{{elevation}}">
+            <paper-item>1</paper-item>
+            <paper-item>2</paper-item>
+            <paper-item>3</paper-item>
+            <paper-item>4</paper-item>
+            <paper-item>5</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
       </hax-editbar>
       <div class$="card-panel {{color}}">
         <h3 class$="{{textColor}}"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
