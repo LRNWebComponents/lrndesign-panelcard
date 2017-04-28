@@ -34,6 +34,21 @@ A LRN element
         width: 4em;
       }
     </style>
+    <hax-editbar hide-hax="{{hideHax}}" edit="{{edit}}">
+      <paper-swatch-picker id="itemcolor" color="{{colorCode}}"></paper-swatch-picker>
+      <paper-tooltip for="itemcolor">Background color</paper-tooltip>
+      <paper-swatch-picker id="textcolor" color="{{textColorCode}}"></paper-swatch-picker>
+      <paper-tooltip for="textcolor">Text color</paper-tooltip>
+      <paper-dropdown-menu class="elevation-dropdown" label="Elevation">
+        <paper-listbox class="dropdown-content" selected="{{elevationList}}">
+          <paper-item>1</paper-item>
+          <paper-item>2</paper-item>
+          <paper-item>3</paper-item>
+          <paper-item>4</paper-item>
+          <paper-item>5</paper-item>
+        </paper-listbox>
+      </paper-dropdown-menu>
+    </hax-editbar>
     <paper-material elevation="{{elevation}}">
       <div class$="card-panel {{color}}">
         <h3 class$="{{textColor}}"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
