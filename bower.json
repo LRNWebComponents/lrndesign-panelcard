@@ -5,7 +5,7 @@
   "dependencies": {
     "polymer": "Polymer/polymer#^1.4.0",
     "lrnsys-behaviors": "LRNWebComponents/lrnsys-behaviors#^1.0.0",
-    "hax-behaviors": "LRNWebComponents/hax-behaviors#^0.0.9",
+    "hax-behaviors": "LRNWebComponents/hax-behaviors#^0.0.11",
     "paper-material": "^1.0.7",
     "materializecss-styles": "LRNWebComponents/materializecss-styles#^0.0.3",
     "paper-swatch-picker": "PolymerElements/paper-swatch-picker#^1.0.2",
