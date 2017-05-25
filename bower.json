@@ -9,7 +9,7 @@
     "paper-material": "^1.0.7",
     "materializecss-styles": "LRNWebComponents/materializecss-styles#^0.0.3",
     "paper-swatch-picker": "PolymerElements/paper-swatch-picker#^1.0.2",
-    "hax-editbar": "LRNWebComponents/hax-editbar#^0.0.6",
+    "hax-editbar": "LRNWebComponents/hax-editbar#^0.1.0",
     "paper-tooltip": "^1.1.4",
     "paper-dropdown-menu": "^1.5.0",
     "hax-editable": "LRNWebComponents/hax-editable#^0.0.3"
