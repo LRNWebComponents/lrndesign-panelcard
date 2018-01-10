@@ -1,10 +1,8 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="../hax-behaviors/hax-behaviors.html">
-<link rel="import" href="../paper-styles/paper-styles.html">
-<link rel="import" href="../paper-tooltip/paper-tooltip.html">
-<link rel="import" href="../paper-dropdown-menu/paper-dropdown-menu.html">
-<link rel="import" href="../paper-swatch-picker/paper-swatch-picker.html">
+<link rel="import" href="../paper-card/paper-card.html">
 <link rel="import" href="../materializecss-styles/materializecss-styles.html">
+<link rel="import" href="../hax-body-behaviors/hax-body-behaviors.html">
+
 <!--
 `lrndesign-panelcard`
 A LRN element
@@ -26,49 +24,35 @@ A LRN element
       .card-panel {
         transition: box-shadow .25s;
         padding: 1.5em;
-        margin: .5em 0 1em 0;
+        margin: 0;
         border-radius: 2px;
         background-color: #fff;
       }
-      .elevation-dropdown {
-        width: 4em;
-      }
-      :host[show-hax] hax-editbar {
-        display: block;
+      h3 {
+        padding: 0;
+        margin:0 0 .5em 0;
       }
     </style>
-    <hax-editbar show-hax="{{showHax}}" edit="{{edit}}">
-      <paper-swatch-picker id="itemcolor" color="{{colorCode}}"></paper-swatch-picker>
-      <paper-tooltip for="itemcolor">Background color</paper-tooltip>
-      <paper-swatch-picker id="textcolor" color="{{textColorCode}}"></paper-swatch-picker>
-      <paper-tooltip for="textcolor">Text color</paper-tooltip>
-      <paper-dropdown-menu class="elevation-dropdown" label="Elevation">
-        <paper-listbox slot="dropdown-content" class="dropdown-content" selected="{{elevationList}}">
-          <paper-item>1</paper-item>
-          <paper-item>2</paper-item>
-          <paper-item>3</paper-item>
-          <paper-item>4</paper-item>
-          <paper-item>5</paper-item>
-        </paper-listbox>
-      </paper-dropdown-menu>
-    </hax-editbar>
-    <paper-material elevation="{{elevation}}">
-      <div class$="card-panel {{color}}">
-        <h3 class$="{{textColor}}"><hax-editable edit="{{edit}}" type="textfield">{{title}}</hax-editable></h3>
-        <span class$="{{textColor}}">
-          <hax-editable edit="{{edit}}" type="html">
-            <content></content>
-          </hax-editable>
-        </span>
-      </div>
-    </paper-material>
+    <aside>
+      <paper-card elevation="[[elevation]]">
+        <div class$="card-panel [[color]]">
+          <h3 class$="[[textColor]]">[[title]]</h3>
+          <span class$="[[textColor]]">
+            <slot></slot>
+          </span>
+        </div>
+      </paper-card>
+    </aside>
   </template>
 
   <script>
     Polymer({
 
       is: 'lrndesign-panelcard',
-      behaviors: [HAXBehaviors.EditBehaviors, MaterializeCSSBehaviors.ColorBehaviors],
+      behaviors: [
+        HAXBehaviors.PropertiesBehaviors,
+        MaterializeCSSBehaviors.ColorBehaviors,
+      ],
       properties: {
         /**
          * Title of the panel
@@ -79,27 +63,12 @@ A LRN element
           reflectToAttribute: true,
         },
         /**
-         * Color code
-         */
-        colorCode: {
-          type: String,
-          observer: '_colorChange',
-        },
-        /**
          * Color class
          */
         color: {
           type: String,
           value: 'yellow lighten-4',
           reflectToAttribute: true,
-          notify: true,
-        },
-        /**
-         * Text color code
-         */
-        textColorCode: {
-          type: String,
-          observer: '_textColorChange',
         },
         /**
          * Text color class
@@ -108,7 +77,6 @@ A LRN element
           type: String,
           value: 'black-text',
           reflectToAttribute: true,
-          notify: true,
         },
         /**
          * Height of the paper.
@@ -118,41 +86,107 @@ A LRN element
           value: 2,
           reflectToAttribute: true,
         },
-        elevationList: {
-          type: Number,
-          value: 1,
-          observer: '_elevationListChange',
-        }
       },
       /**
-       * Reflect value back to elevation correctly from list order.
+       * Attached.
        */
-      _elevationListChange: function(value) {
-        this.elevation = (value+1);
+      attached: function() {
+        // Establish hax properties if they exist
+        let props = {
+          'canScale': true,
+          'canPosition': true,
+          'canEditSource': false,
+          'gizmo': {
+            'title': 'Sticky note card',
+            'description': 'A small sticky note to offset text used for asides.',
+            'icon': 'check-box-outline-blank',
+            'color': 'yellow',
+            'groups': ['Text', 'Layout', 'Visual Treatment'],
+            'handles': [
+              {
+                'type': 'text',
+                'text': 'title'
+              }
+            ],
+            'meta': {
+              'author': 'LRNWebComponents'
+            }
+          },
+          'settings': {
+            'quick': [
+              {
+                'property': 'title',
+                'title': 'Title',
+                'description': 'The heading for this sticky note',
+                'inputMethod': 'textfield',
+                'icon': 'editor:title',
+              },
+              {
+                'property': 'color',
+                'title': 'Background color',
+                'description': 'Select the background color use',
+                'inputMethod': 'colorpicker',
+                'icon': 'editor:format-color-fill',
+              },
+              {
+                'property': 'textColor',
+                'title': 'Text color',
+                'description': 'Select the text color to use',
+                'inputMethod': 'colorpicker',
+                'icon': 'editor:format-color-fill',
+              },
+              {
+                'property': 'elevation',
+                'title': 'Elevation',
+                'description': 'Visually how high this is off the page',
+                'inputMethod': 'textfield',
+                'icon': 'icons:content-copy',
+              },
+            ],
+            'configure': [
+              {
+                'property': 'title',
+                'title': 'Title',
+                'description': 'The heading for this sticky note',
+                'inputMethod': 'textfield',
+                'icon': 'editor:title',
+              },
+              {
+                'slot': '',
+                'title': 'Text',
+                'description': 'The text for our sticky note',
+                'inputMethod': 'textarea',
+                'icon': 'editor:title',
+                'required': false,
+                'validationType': 'text',
+              },
+              {
+                'property': 'color',
+                'title': 'Background color',
+                'description': 'Select the background color use',
+                'inputMethod': 'colorpicker',
+                'icon': 'editor:format-color-fill',
+              },
+              {
+                'property': 'textColor',
+                'title': 'Text color',
+                'description': 'Select the text color to use',
+                'inputMethod': 'colorpicker',
+                'icon': 'editor:format-color-fill',
+              },
+              {
+                'property': 'elevation',
+                'title': 'Elevation',
+                'description': 'Visually how high this is off the page',
+                'inputMethod': 'textfield',
+                'icon': 'icons:content-copy',
+              },
+            ],
+            'advanced': []
+          }
+        };
+        this.setHaxProperties(props);
       },
-      /**
-       * Notice the color change and shift it over to the class name.
-       */
-      _colorChange: function() {
-        if (this.colorCode.substring(0, 1) == '#') {
-          this.color = this._colorTransform(this.colorCode, '', '');
-        }
-      },
-      /**
-       * Text color change and shift it over to the class name.
-       */
-      _textColorChange: function() {
-        if (this.textColorCode.substring(0, 1) == '#') {
-          this.textColor = this._colorTransform(this.textColorCode, '-text', 'text-');
-        }
-      },
-      /**
-       * Demo mode.
-       */
-       _demoInit: function() {
-        this.title = "Block title";
-        this.innerHTML = "Disrupt, innovate out of your job. Pay everything forward. Collapse local inefficiencies. Pay forward via analysis of process. Collapse larger inefficiencies... Collapse edge industries. Rinse, repeat in other areas.";
-      }
     });
   </script>
 </dom-module>
