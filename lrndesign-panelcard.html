@@ -21,6 +21,7 @@ A LRN element
         --secondary-text-color: #FFFFFF;
         --paper-input-container-color: #FFFFFF;
       }
+
       .card-panel {
         transition: box-shadow .25s;
         padding: 1.5em;
@@ -28,9 +29,10 @@ A LRN element
         border-radius: 2px;
         background-color: #fff;
       }
+
       h3 {
         padding: 0;
-        margin:0 0 .5em 0;
+        margin: 0 0 .5em 0;
       }
     </style>
     <aside>
@@ -90,18 +92,18 @@ A LRN element
       /**
        * Attached.
        */
-      attached: function() {
+      attached: function () {
         // Establish hax properties if they exist
         let props = {
           'canScale': true,
           'canPosition': true,
           'canEditSource': false,
           'gizmo': {
-            'title': 'Sticky note card',
-            'description': 'A small sticky note to offset text used for asides.',
-            'icon': 'check-box-outline-blank',
-            'color': 'yellow',
-            'groups': ['Text', 'Layout', 'Visual Treatment'],
+            'title': 'Note card',
+            'description': 'A small note to offset text used for asides.',
+            'icon': 'icons:check-box-outline-blank',
+            'color': 'grey',
+            'groups': ['Content', 'Visual Treatment'],
             'handles': [
               {
                 'type': 'text',
@@ -125,13 +127,6 @@ A LRN element
                 'property': 'color',
                 'title': 'Background color',
                 'description': 'Select the background color use',
-                'inputMethod': 'colorpicker',
-                'icon': 'editor:format-color-fill',
-              },
-              {
-                'property': 'textColor',
-                'title': 'Text color',
-                'description': 'Select the text color to use',
                 'inputMethod': 'colorpicker',
                 'icon': 'editor:format-color-fill',
               },
@@ -168,18 +163,18 @@ A LRN element
                 'icon': 'editor:format-color-fill',
               },
               {
-                'property': 'textColor',
-                'title': 'Text color',
-                'description': 'Select the text color to use',
-                'inputMethod': 'colorpicker',
-                'icon': 'editor:format-color-fill',
-              },
-              {
                 'property': 'elevation',
                 'title': 'Elevation',
                 'description': 'Visually how high this is off the page',
-                'inputMethod': 'textfield',
-                'icon': 'icons:content-copy',
+                'inputMethod': 'select',
+                'options': {
+                  0: '0',
+                  1: '1',
+                  2: '2',
+                  3: '3',
+                  4: '4',
+                  5: '5',
+                },
               },
             ],
             'advanced': []
